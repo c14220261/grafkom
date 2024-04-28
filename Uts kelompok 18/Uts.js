@@ -18,7 +18,7 @@ function generateCircleVertices(radius, segmentCount) {
 
     var angleStep = (2 * Math.PI) / segmentCount;
 
-    // Center point
+    
     vertices.push(0, 0, 0);
     normals.push(0, 0, 1);
     texCoords.push(0.5, 0.5);
@@ -28,16 +28,16 @@ function generateCircleVertices(radius, segmentCount) {
 
         var x = radius * Math.cos(angle);
         var y = radius * Math.sin(angle);
-        var z = 0; // Circle lies in the xy-plane
+        var z = 0;
 
         vertices.push(x, y, z);
 
-        // Normals are along the z-axis
+        
         normals.push(0, 0, 1);
 
-        // Texture coordinates
-        var s = 0.5 + 0.5 * Math.cos(angle); // Centering the texture
-        var t = 0.5 + 0.5 * Math.sin(angle); // Centering the texture
+        
+        var s = 0.5 + 0.5 * Math.cos(angle); 
+        var t = 0.5 + 0.5 * Math.sin(angle); 
         texCoords.push(s, t);
     }
 
@@ -80,7 +80,7 @@ function generateConeVertices(radius, height, sectorCount, stackCount) {
         normals.push(0, 0, -1);
         texCoords.push(0.5 + 0.5 * Math.cos(sectorAngle), 0.5 + 0.5 * Math.sin(sectorAngle));
     }
-    // Generate vertices, normals, and texture coordinates for the sides of the cone
+    
     for (var i = 1; i <= stackCount; ++i) {
         var h = i * stackStep;
         var r = radius - i * radiusStep;
@@ -120,12 +120,12 @@ function generateConeVertices(radius, height, sectorCount, stackCount) {
 
 function generateConeIndices(vertices, sectorCount, stackCount) {
     var indices = [];
-    // Indices for the base of the cone
+    
     for (var i = 1; i <= sectorCount; ++i) {
         indices.push(0, i, i + 1);
     }
     indices.push(0, sectorCount + 1, 1);
-    // Indices for the sides of the cone
+   
     for (var i = 0; i < stackCount - 1; ++i) {
         var k1 = i * (sectorCount + 1) + 1;
         var k2 = k1 + sectorCount + 1;
@@ -583,11 +583,11 @@ function main() {
         x_prev = e.x;
         y_prev = e.y;
     
-        // Update angles
+        
         THETA += dx;
         ALPHA += dy;
     
-        // Clamp angles within limits
+     
         ALPHA = Math.max(Math.min(ALPHA, MAX_ALPHA), MIN_ALPHA);
         THETA = Math.max(Math.min(THETA, MAX_THETA), MIN_THETA);
     
@@ -845,13 +845,10 @@ function main() {
     ];
     
     var curvePointsparuh = bezierCurve(pathPoints, 100);
-    // Generate pipe vertices
     var radiusparuh = 0.2;
     var paruhData = generatePipeVertices(curvePointsparuh, radiusparuh, sectorCount);
     var paruhvertices = paruhData.vertices;
     var paruhnormals = paruhData.normals;
-
-    // Generate pipe indices
     var paruhindices = generatePipeIndices(curvePointsparuh, sectorCount);
 
     //head 
@@ -1037,8 +1034,8 @@ function main() {
     var radiusxheadhk = 5.5;
     var radiusyheadhk = 1.5;
     var radiuszheadhk = 8;
-    var sectorCount = 100;// Number of sectors (longitude)
-    var stackCount = 100;// Number of stacks (latitude)
+    var sectorCount = 100;
+    var stackCount = 100;
     var headhkData = generateEllipsoidVertices(radiusxheadhk,radiusyheadhk,radiuszheadhk, sectorCount, stackCount);
     var headhkvertices = headhkData.vertices;
     var headhknormals = headhkData.normals;
@@ -1138,8 +1135,8 @@ function main() {
     var earIndices2hk = generateEllipticalParaboloidIndices(earVertices2hk, sectorCount, stackCount);
 
     // Body data cone
-    var radius = 5; // Set the radius of the cone
-    var height = 10; // Set the height of the cone
+    var radius = 5; 
+    var height = 10; 
     
     var coneData = generateConeVertices(radius, height, sectorCount, stackCount);
     var conevertices = coneData.vertices;
@@ -1278,8 +1275,8 @@ function main() {
     var leaftexCoords3 = leafData3.texCoords;
     var leafindices3 = generateSphereIndices(sectorCount, stackCount);
 
-    var tentradius = 30; // Set the radius of the cone
-    var tentheight = 60; // Set the height of the cone
+    var tentradius = 30; 
+    var tentheight = 60; 
     var tentData = generateConeVertices(tentradius, tentheight, sectorCount, stackCount);
     var tentvertices = tentData.vertices;
     var tentnormals = tentData.normals;
@@ -1308,13 +1305,13 @@ function main() {
         { x: 13, y: 4, z: -2 },
     ];
     var curvePoints = bezierCurve(pathPoints, 160);
-    // Generate pipe vertices
+   
     var radiustail = 0.9;
     var tailData = generatePipeVertices(curvePoints, radiustail, sectorCount);
     var tailvertices = tailData.vertices;
     var tailnormals = tailData.normals;
 
-    // Generate pipe indices
+   
     var tailindices = generatePipeIndices(curvePoints, sectorCount);
 
      //bind buffer badzmaru
@@ -1977,12 +1974,12 @@ function main() {
     GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, headindex_ebo);
     GL.bufferData(GL.ELEMENT_ARRAY_BUFFER, new Uint16Array(headindices), GL.STATIC_DRAW);
 
-    // Example usage:
-var canvasWidth = CANVAS.width; // Set canvas width (replace with actual value)
-var canvasHeight = CANVAS.height; // Set canvas height (replace with actual value)
-var near = 0.1;  // Near clipping plane distance
-var far = 10000.0;  // Far clipping plane distance
-var fov = Math.PI / 4; // 45-degree field of view (can adjust as needed)
+
+var canvasWidth = CANVAS.width;
+var canvasHeight = CANVAS.height; 
+var near = 0.1;  
+var far = 10000.0;  
+var fov = Math.PI / 4; 
 
 var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, near, far);
 
@@ -3095,19 +3092,35 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
     var rotateYSpeed = 2;
     var maxRotateZAngle = Math.PI / 6; 
     var maxRotateYAngle = Math.PI / 6;
-    var rotateZAngletk = 0; // Initial angle for rotateZ animation
-    var rotateZSpeedtk = 1; // Speed of rotation in radians per frame
-    var rotateYAngletk = 0; // Initial angle for rotateZ animation
-    var rotateYSpeedtk = 1; // Speed of rotation in radians per frame
-    var maxRotateZAngletk = Math.PI / 12; // Maximum angle before reversing direction
+    var rotateZAngletk = 0; 
+    var rotateZSpeedtk = 1; 
+    var rotateYAngletk = 0; 
+    var rotateYSpeedtk = 1; 
+    var maxRotateZAngletk = Math.PI / 12; 
     var maxRotateYAngletk = Math.PI / 16;
-    var minScale = 0.8; // Minimum scale factor
-    var maxScale = 1.2; // Maximum scale factor
-    var scaleSpeed = 0.001; // Speed of scaling change per millisecond
-    var minRadius = 0.6; // Minimum radius
-    var maxRadius = 1.2; // Maximum radius
-    var scaleFactor = minScale; // Initial scale factor
-    var scalingDirection = 1; // Initial scaling direction (1 for increasing, -1 for decreasing)
+    var minScale = 0.8;
+    var maxScale = 1.2;
+    var scaleSpeed = 0.001;
+    var minRadius = 0.6; 
+    var maxRadius = 1.2;
+    var scaleFactor = minScale; 
+    var scalingDirection = 1; 
+
+    var minScale1 = 0.8; 
+    var maxScale1 = 1.2; 
+    var scaleSpeed1 = 0.001; 
+    var minRadius1 = 0.6; 
+    var maxRadius1 = 1.2; 
+    var scaleFactor1 = minScale; 
+    var scalingDirection1 = 1; 
+
+    var minScale2 = 0.8;
+    var maxScale2 = 1.2;
+    var scaleSpeed2 = 0.001; 
+    var minRadius2 = 0.6;
+    var maxRadius2 = 1.2; 
+    var scaleFactor2 = minScale2; 
+    var scalingDirection2 = 1; 
     GL.enable(GL.DEPTH_TEST);
 
     GL.enable(GL.DEPTH_TEST);
@@ -3125,7 +3138,7 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
             ALPHA += dy;
             THETA += dx;
     
-            // Clamp angles within limits
+     
             ALPHA = Math.max(Math.min(ALPHA, MAX_ALPHA), MIN_ALPHA);
             THETA = Math.max(Math.min(THETA, MAX_THETA), MIN_THETA);
         }
@@ -3287,31 +3300,31 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
 
     //bola mata kanan
     setColorUniform([0, 0, 0]);
-    // Apply scaling animation to the sphere representing the left eye
+  
     model_matrix = LIBS.get_I4();
-    LIBS.translate(model_matrix, [-21,3, 7]); // Translate to the initial position
-    LIBS.rotateX(model_matrix, 90 * Math.PI / 180); // Rotate if needed
-    LIBS.rotateY(model_matrix, 90 * Math.PI / 180); // Rotate if needed
+    LIBS.translate(model_matrix, [-21,3, 7]); 
+    LIBS.rotateX(model_matrix, 90 * Math.PI / 180); 
+    LIBS.rotateY(model_matrix, 90 * Math.PI / 180); 
 
-    // Apply scaling transformation
-    scaleFactor += scaleSpeed * dt * scalingDirection; // Update the scale factor based on time
+    
+    scaleFactor += scaleSpeed * dt * scalingDirection;
 
-    // Check if the scale factor exceeds the bounds
+    
     if (scaleFactor > maxScale) {
         scaleFactor = maxScale;
-        scalingDirection = -1; // Reverse scaling direction
+        scalingDirection = -1; 
     } else if (scaleFactor < minScale) {
         scaleFactor = minScale;
-        scalingDirection = 1; // Reverse scaling direction
+        scalingDirection = 1; 
     }
 
-    // Calculate the radius based on the scale factor
+   
     var currentRadius = minRadius + (maxRadius - minRadius) * scaleFactor;
     var scaleVector = [currentRadius, currentRadius, currentRadius];
 
     LIBS.scale(model_matrix, scaleVector);
 
-    LIBS.translateX(model_matrix, translationAmount); // Translate if needed
+    LIBS.translateX(model_matrix, translationAmount); 
 
     GL.uniformMatrix4fv(uniform_projection_matrix, false, projection_matrix);
     GL.uniformMatrix4fv(uniform_view_matrix, false, view_matrix);
@@ -3328,31 +3341,31 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
     
     //bola mata kiri
     setColorUniform([0, 0, 0]);
-    // Apply scaling animation to the sphere representing the left eye
+    
     model_matrix = LIBS.get_I4();
-    LIBS.translate(model_matrix, [-25,3, 8]); // Translate to the initial position
-    LIBS.rotateX(model_matrix, 90 * Math.PI / 180); // Rotate if needed
-    LIBS.rotateY(model_matrix, 90 * Math.PI / 180); // Rotate if needed
+    LIBS.translate(model_matrix, [-25,3, 8]); 
+    LIBS.rotateX(model_matrix, 90 * Math.PI / 180);
+    LIBS.rotateY(model_matrix, 90 * Math.PI / 180); 
 
-    // Apply scaling transformation
-    scaleFactor += scaleSpeed * dt * scalingDirection; // Update the scale factor based on time
+   
+    scaleFactor += scaleSpeed * dt * scalingDirection; 
 
-    // Check if the scale factor exceeds the bounds
+ 
     if (scaleFactor > maxScale) {
         scaleFactor = maxScale;
-        scalingDirection = -1; // Reverse scaling direction
+        scalingDirection = -1; 
     } else if (scaleFactor < minScale) {
         scaleFactor = minScale;
-        scalingDirection = 1; // Reverse scaling direction
+        scalingDirection = 1;
     }
 
-    // Calculate the radius based on the scale factor
+  
     var currentRadius = minRadius + (maxRadius - minRadius) * scaleFactor;
     var scaleVector = [currentRadius, currentRadius, currentRadius];
 
     LIBS.scale(model_matrix, scaleVector);
 
-    LIBS.translateX(model_matrix, translationAmount); // Translate if needed
+    LIBS.translateX(model_matrix, translationAmount); 
 
     GL.uniformMatrix4fv(uniform_projection_matrix, false, projection_matrix);
     GL.uniformMatrix4fv(uniform_view_matrix, false, view_matrix);
@@ -3385,9 +3398,9 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
     LIBS.rotateZ(model_matrix, -115 * Math.PI / 180)
     LIBS.translateX(model_matrix, translationAmount);
     if (Math.abs(rotateYAngletk) >= maxRotateYAngletk) {
-        rotateYSpeedtk *= -1; // Reverse direction
+        rotateYSpeedtk *= -1; 
     }
-    rotateYAngletk += rotateYSpeedtk * dt / 1000; // Convert milliseconds to seconds
+    rotateYAngletk += rotateYSpeedtk * dt / 1000; 
 
     LIBS.rotateZ(model_matrix, rotateYAngletk);
     GL.bindBuffer(GL.ARRAY_BUFFER, tanganVertexVBO);
@@ -3406,9 +3419,9 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
     LIBS.rotateZ(model_matrix, 115 * Math.PI / 180)
     LIBS.translateX(model_matrix, translationAmount);
     if (Math.abs(rotateYAngletk) >= maxRotateYAngletk) {
-        rotateYSpeedtk *= -1; // Reverse direction
+        rotateYSpeedtk *= -1; 
     }
-    rotateYAngletk += rotateYSpeedtk * dt / 1000; // Convert milliseconds to seconds
+    rotateYAngletk += rotateYSpeedtk * dt / 1000; 
 
     LIBS.rotateZ(model_matrix, rotateYAngletk);
     GL.bindBuffer(GL.ARRAY_BUFFER, tanganVertexVBO1);
@@ -3630,7 +3643,7 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
             LIBS.rotateZ(model_matrix, 30 * Math.PI / 180)
             LIBS.translateX(model_matrix, translationAmount);
             if (Math.abs(rotateYAngle) >= maxRotateYAngle) {
-                rotateYSpeed *= -1; // Reverse direction
+                rotateYSpeed *= -1; 
             }
             rotateYAngle += rotateYSpeed * dt / 1000; 
 
@@ -3790,22 +3803,22 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
             model_matrix = LIBS.get_I4();
             LIBS.translate(model_matrix, [-2.5, 1.5, 9.9]);
             LIBS.translateX(model_matrix, translationAmount);
-            scaleFactor += scaleSpeed * dt * scalingDirection; // Update the scale factor based on time
+            scaleFactor1 += scaleSpeed1 * dt * scalingDirection1; 
 
-            // Check if the scale factor exceeds the bounds
-            if (scaleFactor > maxScale) {
-                scaleFactor = maxScale;
-                scalingDirection = -1; // Reverse scaling direction
-            } else if (scaleFactor < minScale) {
-                scaleFactor = minScale;
-                scalingDirection = 1; // Reverse scaling direction
+          
+            if (scaleFactor1 > maxScale1) {
+                scaleFactor1 = maxScale1;
+                scalingDirection1 = -1; 
+            } else if (scaleFactor1 < minScale1) {
+                scaleFactor1 = minScale1;
+                scalingDirection1 = 1;
             }
         
-            // Calculate the radius based on the scale factor
-            var currentRadius = minRadius + (maxRadius - minRadius) * scaleFactor;
-            var scaleVector = [currentRadius, currentRadius, currentRadius];
+           
+            var currentRadius1 = minRadius1 + (maxRadius1 - minRadius1) * scaleFactor1;
+            var scaleVector1 = [currentRadius1, currentRadius1, currentRadius1];
         
-            LIBS.scale(model_matrix, scaleVector);
+            LIBS.scale(model_matrix, scaleVector1);
             GL.uniformMatrix4fv(uniform_projection_matrix, false, projection_matrix);
             GL.uniformMatrix4fv(uniform_view_matrix, false, view_matrix);
             GL.uniformMatrix4fv(uniform_model_matrix, false, model_matrix);
@@ -3819,22 +3832,22 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
             //pupil2
             model_matrix = LIBS.get_I4();
             LIBS.translate(model_matrix, [2.5, 1.5, 9.9]);
-            scaleFactor += scaleSpeed * dt * scalingDirection; // Update the scale factor based on time
+            scaleFactor1 += scaleSpeed1 * dt * scalingDirection1; 
 
-            // Check if the scale factor exceeds the bounds
-            if (scaleFactor > maxScale) {
-                scaleFactor = maxScale;
-                scalingDirection = -1; // Reverse scaling direction
-            } else if (scaleFactor < minScale) {
-                scaleFactor = minScale;
-                scalingDirection = 1; // Reverse scaling direction
+           
+            if (scaleFactor1 > maxScale1) {
+                scaleFactor1 = maxScale1;
+                scalingDirection1 = -1; 
+            } else if (scaleFactor1 < minScale1) {
+                scaleFactor1 = minScale1;
+                scalingDirection1 = 1; 
             }
         
-            // Calculate the radius based on the scale factor
-            var currentRadius = minRadius + (maxRadius - minRadius) * scaleFactor;
-            var scaleVector = [currentRadius, currentRadius, currentRadius];
+            
+            var currentRadius1 = minRadius1 + (maxRadius1 - minRadius1) * scaleFactor1;
+            var scaleVector1 = [currentRadius1, currentRadius1, currentRadius1];
         
-            LIBS.scale(model_matrix, scaleVector);
+            LIBS.scale(model_matrix, scaleVector1);
             LIBS.translateX(model_matrix, translationAmount);
             GL.uniformMatrix4fv(uniform_projection_matrix, false, projection_matrix);
             GL.uniformMatrix4fv(uniform_view_matrix, false, view_matrix);
@@ -4417,7 +4430,7 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
        
           LIBS.translateX(model_matrix, translationAmount);
           if (Math.abs(rotateYAngle) >= maxRotateYAngle) {
-              rotateYSpeed *= -1; // Reverse direction
+              rotateYSpeed *= -1; 
           }
           rotateYAngle += rotateYSpeed * dt / 1000; 
 
@@ -4440,9 +4453,9 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
           LIBS.rotateZ(model_matrix, -60 * Math.PI / 180)
           LIBS.translateX(model_matrix, translationAmount);
           if (Math.abs(rotateYAngle) >= maxRotateYAngle) {
-              rotateYSpeed *= -1; // Reverse direction
+              rotateYSpeed *= -1; 
            }
-          rotateYAngle += rotateYSpeed * dt / 1000; // Convert milliseconds to seconds
+          rotateYAngle += rotateYSpeed * dt / 1000;
           LIBS.rotateX(model_matrix, rotateYAngle);
           GL.bindBuffer(GL.ARRAY_BUFFER, armvertexVBO2hk);
           GL.vertexAttribPointer(position_vao, 3, GL.FLOAT, false, 0, 0);
@@ -4458,20 +4471,20 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
           //eye
           model_matrix = LIBS.get_I4();
           LIBS.translate(model_matrix, [22, 1.7, 7]);
-          // Apply scaling transformation
-          scaleFactor += scaleSpeed * dt * scalingDirection; // Update the scale factor based on time
-          // Check if the scale factor exceeds the bounds
-          if (scaleFactor > maxScale) {
-              scaleFactor = maxScale;
-              scalingDirection = -1; // Reverse scaling direction
-          } else if (scaleFactor < minScale) {
-              scaleFactor = minScale;
-              scalingDirection = 1; // Reverse scaling direction
+     
+          scaleFactor2 += scaleSpeed2 * dt * scalingDirection2;
+          
+          if (scaleFactor2 > maxScale2) {
+              scaleFactor2 = maxScale2;
+              scalingDirection2 = -1; 
+          } else if (scaleFactor2 < minScale2) {
+              scaleFactor2 = minScale2;
+              scalingDirection2 = 1; 
           }
-         // Calculate the radius based on the scale factor
-          var currentRadius = minRadius + (maxRadius - minRadius) * scaleFactor;
-          var scaleVector = [currentRadius, currentRadius, currentRadius];
-          LIBS.scale(model_matrix, scaleVector);
+      
+          var currentRadius2 = minRadius2 + (maxRadius2 - minRadius2) * scaleFactor2;
+          var scaleVector2 = [currentRadius2, currentRadius2, currentRadius2];
+          LIBS.scale(model_matrix, scaleVector2);
           LIBS.translateX(model_matrix, translationAmount);
           GL.uniformMatrix4fv(uniform_projection_matrix, false, projection_matrix);
           GL.uniformMatrix4fv(uniform_view_matrix, false, view_matrix);
@@ -4486,22 +4499,22 @@ var projection_matrix = createPerspectiveMatrix(canvasWidth, canvasHeight, fov, 
           //eye2
           model_matrix = LIBS.get_I4();
           LIBS.translate(model_matrix, [28, 1.7, 7]);
-          // Apply scaling transformation
-          scaleFactor += scaleSpeed * dt * scalingDirection; // Update the scale factor based on time
-        // Check if the scale factor exceeds the bounds
-        if (scaleFactor > maxScale) {
-            scaleFactor = maxScale;
-            scalingDirection = -1; // Reverse scaling direction
-        } else if (scaleFactor < minScale) {
-            scaleFactor = minScale;
-            scalingDirection = 1; // Reverse scaling direction
+          
+          scaleFactor2 += scaleSpeed2 * dt * scalingDirection2;
+        
+        if (scaleFactor2 > maxScale2) {
+            scaleFactor2 = maxScale2;
+            scalingDirection2= -1; 
+        } else if (scaleFactor2 < minScale2) {
+            scaleFactor2 = minScale2;
+            scalingDirection2 = 1;
         }
 
-        // Calculate the radius based on the scale factor
-        var currentRadius = minRadius + (maxRadius - minRadius) * scaleFactor;
-        var scaleVector = [currentRadius, currentRadius, currentRadius];
+      
+        var currentRadius2 = minRadius2 + (maxRadius2 - minRadius2) * scaleFactor2;
+        var scaleVector2 = [currentRadius2, currentRadius2, currentRadius2];
 
-        LIBS.scale(model_matrix, scaleVector);
+        LIBS.scale(model_matrix, scaleVector2);
         
         LIBS.translateX(model_matrix, translationAmount);
         GL.uniformMatrix4fv(uniform_projection_matrix, false, projection_matrix);
